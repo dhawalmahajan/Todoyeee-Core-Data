@@ -12,7 +12,7 @@ class TodoLIstViewController: UITableViewController {
 
      let cellID = "ToDoItemCell"
     
-    let itemArray = ["Apple", "Guava", "Banana"]
+    var itemArray = ["Apple", "Guava", "Banana"]
     override func viewDidLoad() {
         super.viewDidLoad()
 //        tableView.reloadData()
@@ -33,20 +33,37 @@ class TodoLIstViewController: UITableViewController {
     //MARK: Tableview delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         
-        if let cell = tableView.cellForRow(at: indexPath) {
+        
             
-            if cell.accessoryType == .checkmark {
-                cell.accessoryType = .none
+        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
             } else {
-                cell.accessoryType = .checkmark
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             }
-            if let text = cell.textLabel?.text {
-                print("\(text)")
-            }
-        }
-    }
 
+        tableView.deselectRow(at: indexPath, animated: true)
+
+    }
+    
+    //MARK: Add new Items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textfield = UITextField()
+        let alert = UIAlertController(title: "Add new todoyee Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            self.itemArray.append(textfield.text!)
+            self.tableView.reloadData()
+            print("Success")
+        }
+        alert.addTextField { (alertTextfield) in
+            alertTextfield.placeholder = "Create New Item"
+            textfield = alertTextfield
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 
