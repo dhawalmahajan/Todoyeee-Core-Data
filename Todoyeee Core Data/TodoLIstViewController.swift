@@ -97,7 +97,7 @@ class TodoLIstViewController: UITableViewController {
         let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
         if let additionalPredicate = predicate {
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-        } else {
+         } else {
             request.predicate = categoryPredicate
         }
         do {
